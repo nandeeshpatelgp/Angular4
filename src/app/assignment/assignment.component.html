@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6">
+      <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+        <div class="form-group">
+          <label>Email:</label>
+          <input type="email" class="form-control" required email name="email" ngModel #email="ngModel">
+          <span class="text-danger" *ngIf="!email.valid && email.touched" >Please enter a valid email Address.</span>
+        </div>
+        <div class="form-group">
+          <label>Proficiency</label>
+          <select id="prof" name="prof" class="form-control" [ngModel]="prof">
+            <option value="basic">Basic</option>
+            <option value="advanced">Advanced</option>
+            <option value="pro">Pro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" class="form-control" required name="pwd" ngModel #pwd="ngModel">
+          <span class="text-danger" *ngIf="pwd.invalid && pwd.touched">Password is a mandatory field!</span>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div class="row col-xs-6" *ngIf="user.email != ''">
+    <h3> User Data</h3>
+    <p>Email: {{user.email}}</p>
+    <p>Proficiency: {{user.prof}}</p>
+  </div>
+</div>
