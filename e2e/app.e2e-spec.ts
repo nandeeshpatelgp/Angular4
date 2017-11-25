@@ -1,14 +1,14 @@
-import { AppPage } from './app.po';
+import { ObservablesPage } from './app.po';
 
-describe('github App', () => {
-  let page: AppPage;
+describe('observables App', () => {
+  let page: ObservablesPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new ObservablesPage();
   });
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!!');
   });
 });
