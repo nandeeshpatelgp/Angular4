@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-success" type="submit" [disabled]="recipeForm.invalid">Save</button>
+          <button class="btn btn-danger" type="button" [routerLink]="['../']">Cancel</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" class="form-control" formControlName="name">
+          <span class="text-danger" *ngIf="recipeForm.controls['name'].invalid && recipeForm.controls['name'].touched">Recipe name is mandatory!</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="imgpath">Image Path</label>
+          <input type="text" id="imgpath" class="form-control" formControlName="imgpath">
+          <span class="text-danger" *ngIf="recipeForm.controls['imgpath'].invalid && recipeForm.controls['imgpath'].touched">
+            Image path is mandatory!
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <img src="{{recipeForm.controls['imgpath'].value}}" class="img-responsive">
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="desc">Description</label>
+          <textarea rows="6" class="form-control" id="desc" formControlName="desc"></textarea>
+          <span class="text-danger" *ngIf="recipeForm.controls['desc'].invalid && recipeForm.controls['desc'].touched">
+            Please enter the recipe description.
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <label>Ingredients</label>
+        </div>
+        <div class="col-xs-8">
+          <label>Name:</label>
+        </div>
+        <div class="col-xs-2">
+          <label>Quantity:</label>
+        </div>
+        <div class="col-xs-12" formArrayName="ings">
+          <div class="row" *ngFor="let ing of recipeForm.get('ings').controls; let i = index;" [formGroupName]="i" style="margin-top: 10px;">
+            <div class="col-xs-8">
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="col-xs-2">
+              <input type="number" class="form-control" formControlName="qty">
+            </div>
+            <div class="col-xs-2">
+              <button class="btn btn-danger" (click)="deleteItem(i)">X</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 10px;" ngClass="col-xs-12">
+        <button class="btn btn-success" type="button" (click)="addIngredient()">Add new Ingredient</button>
+      </div>
+    </form>
+  </div>
+</div>

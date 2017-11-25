@@ -1,14 +1,14 @@
-import { AppPage } from './app.po';
+import { CourseProjectPage } from './app.po';
 
-describe('github App', () => {
-  let page: AppPage;
+describe('course-project App', () => {
+  let page: CourseProjectPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new CourseProjectPage();
   });
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!!');
   });
 });
