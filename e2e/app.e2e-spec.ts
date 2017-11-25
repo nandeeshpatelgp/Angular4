@@ -1,10 +1,10 @@
-import { FormExamplePage } from './app.po';
+import { ReactiveFormPage } from './app.po';
 
-describe('form-example App', () => {
-  let page: FormExamplePage;
+describe('reactive-form App', () => {
+  let page: ReactiveFormPage;
 
   beforeEach(() => {
-    page = new FormExamplePage();
+    page = new ReactiveFormPage();
   });
 
   it('should display welcome message', () => {

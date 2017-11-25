@@ -1,33 +1,28 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-6">
-      <form (ngSubmit)="onSubmit()" #userForm="ngForm">
-        <div class="form-group">
-          <label>Email:</label>
-          <input type="email" class="form-control" required email name="email" ngModel #email="ngModel">
-          <span class="text-danger" *ngIf="!email.valid && email.touched" >Please enter a valid email Address.</span>
-        </div>
-        <div class="form-group">
-          <label>Proficiency</label>
-          <select id="prof" name="prof" class="form-control" [ngModel]="prof">
-            <option value="basic">Basic</option>
-            <option value="advanced">Advanced</option>
-            <option value="pro">Pro</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Password:</label>
-          <input type="password" class="form-control" required name="pwd" ngModel #pwd="ngModel">
-          <span class="text-danger" *ngIf="pwd.invalid && pwd.touched">Password is a mandatory field!</span>
-        </div>
-        <button class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Submit</button>
-      </form>
-    </div>
+<form [formGroup]="projectForm">
+  <div class="form-group">
+    <label for="projName">Project Name:</label>
+    <input type="text" class="form-control" id="projName" formControlName="projName">
+    <span class="text-danger"
+    *ngIf="projectForm.get('projName').invalid && projectForm.get('projName').touched && projectForm.get('projName').errors['required']">
+      Project name is mandatory</span>
+    <span class="text-danger"
+          *ngIf="projectForm.get('projName').invalid && projectForm.get('projName').touched && projectForm.get('projName').errors['invalidProject']">
+      Invalid project name!</span>
   </div>
-  <hr />
-  <div class="row col-xs-6" *ngIf="user.email != ''">
-    <h3> User Data</h3>
-    <p>Email: {{user.email}}</p>
-    <p>Proficiency: {{user.prof}}</p>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" class="form-control" id="email" formControlName="email">
+    <span class="text-danger"
+          *ngIf="projectForm.get('email').invalid && projectForm.get('email').touched">
+      Project enter a valid email id.</span>
   </div>
-</div>
+  <div class="form-group">
+    <label>Status</label>
+    <select id="status" formControlName="status" class="form-control" [ngModel]="status">
+      <option value="Stable">Stable</option>
+      <option value="Critical">Critical</option>
+      <option value="Finished">Finished</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

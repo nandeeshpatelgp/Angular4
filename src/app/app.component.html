@@ -1,63 +1,45 @@
 <div class="container">
-  <div class="row">
-    <button class="btn btn-success" routerLink="/assignment">Go to Assignment</button>
-  </div>
   <div class="col-xs-6">
     <div class="row">
-      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-        <form (ngSubmit)="onSubmit()" #form="ngForm">
-          <div id="user-section" ngModelGroup="userData">
-            <div class="form-group">
-              <label>Username:</label>
-              <input type="text" class="form-control" id="username" name="username" ngModel required #username="ngModel">
-              <p class="text-danger" *ngIf="!username.valid && username.touched" >Username is a required field</p>
-            </div>
-            <button class="btn btn-default" type="button" (click)="suggestUsername()">Suggest Username</button>
-            <div class="form-group">
-              <label>Email:</label>
-              <input type="email" class="form-control" id="email" name="email" ngModel required email #email="ngModel">
-              <span class="text-danger" *ngIf="!email.valid && email.touched">Please enter a valid email</span>
-            </div>
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="userData">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" class="form-control" formControlName="username" #username>
+            <span class="text-danger"
+                  *ngIf="signUpForm.get('userData.username').invalid && signUpForm.get('userData.username').touched && signUpForm.get('userData.username').errors['required']">Username is mandatory!</span>
+            <span class="text-danger" *ngIf="signUpForm.get('userData.username').invalid && signUpForm.get('userData.username').touched && signUpForm.get('userData.username').errors['forbiddenName']" >Username already in use</span>
           </div>
           <div class="form-group">
-            <label>Security Question:</label>
-            <select class="form-control" id="security-qstn" name="secret" [ngModel]="qstn">
-              <option value="pet">What was the name of your first pet?</option>
-              <option value="city">Where were you born?</option>
-            </select>
+            <label for="email">Email:</label>
+            <input type="email" id="email" class="form-control" formControlName="email">
+            <span *ngIf="signUpForm.get('userData.email').pending" >Checking for existing emails.</span>
+            <span class="text-danger"
+                  *ngIf="signUpForm.get('userData.email').invalid && signUpForm.get('userData.email').touched">Please enter a valid email id.</span>
           </div>
-          <div class="form-group">
-            <label>Answer:</label>
-            <input type="text" class="form-control" id="ans" name="ans" [(ngModel)]="answer" #ans="ngModel">
+        </div>
+        <div class="radio form-group" *ngFor="let gen of genders">
+          <label>
+            <input type="radio" [value]="gen" formControlName="gender">
+            {{gen}}
+          </label>
+        </div>
+        <div class="form-group" formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button class="btn btn-success" type="button" (click)="onHobbyAdd()">Add Hobby</button>
+          <div class="form-group" *ngFor="let hobbyControl of signUpForm.get('hobbies').controls; let i = index">
+            <input type="text" [formControlName]="i" class="form-control">
           </div>
-          <p>Your answer to secret question is {{ answer }}</p>
-          <div class="radio" *ngFor="let gen of genders">
-            <label>
-              <input type="radio"
-                     name="gender"
-                     ngModel
-                     [value]="gen">
-              {{gen}}
-            </label>
-          </div>
-          <button type="submit" class="btn btn-primary" [disabled]=" !form.valid ">Submit</button>
-        </form>
-      </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
     </div>
     <hr />
-    <div class="row" *ngIf="user.username !== ''">
-      <div class="col-xs-12">
-        <h3>Your Data</h3>
-        <p>Username: {{user.username}} </p>
-        <p>Email: {{user.email}} </p>
-        <p>Secret Question: {{user.question}} </p>
-        <p>Answer: {{user.answer}} </p>
-        <p>Gender: {{user.gender}} </p>
-      </div>
+    <div class="row">
+      <button class="btn btn-success" routerLink="/assignment">Assignment</button>
     </div>
   </div>
-  <div class="col-xs-6">
+  <div class="col-xs-5">
     <router-outlet></router-outlet>
   </div>
 </div>
-

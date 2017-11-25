@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {HttpModule} from "@angular/http";
-import {FormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 import { AssignmentComponent } from './assignment/assignment.component';
 import {RouterModule, Routes} from "@angular/router";
 
-const appRouter: Routes = [
+const appRoutes: Routes = [
   {path: "assignment", component: AssignmentComponent}
 ];
 
@@ -19,8 +19,8 @@ const appRouter: Routes = [
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule,
-    RouterModule.forRoot(appRouter)
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

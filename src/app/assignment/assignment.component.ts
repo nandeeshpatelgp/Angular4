@@ -1,5 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-assignment',
@@ -8,24 +9,30 @@ import {NgForm} from "@angular/forms";
 })
 export class AssignmentComponent implements OnInit {
 
-  @ViewChild('userForm') userForm: NgForm;
-
-  prof = "advanced";
-  user = {
-    email: '',
-    pwd: '',
-    prof: ''
-  };
+  projectForm: FormGroup;
+  status = 'Critical';
+  invalidProject = "Test";
 
   constructor() { }
 
   ngOnInit() {
+    this.projectForm = new FormGroup({
+      'projName': new FormControl(null,[Validators.required],[this.projectInvalid]),
+      'email': new FormControl(null,[Validators.required,Validators.email]),
+      'status': new FormControl(null)
+    });
   }
 
-  onSubmit(){
-    this.user.email = this.userForm.value.email;
-    this.user.pwd = this.userForm.value.pwd;
-    this.user.prof = this.userForm.value.prof;
+  projectInvalid(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if(control.value === "Test"){
+          resolve({'invalidProject': true});
+        }else {
+          resolve(null);
+        }
+      },3000)
+    });
+    return promise;
   }
-
 }
